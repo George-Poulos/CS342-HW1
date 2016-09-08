@@ -16,67 +16,62 @@ import java.util.*;
 
 public class Dijkstra{
 
+    public void calculateAll(cityVertex fromCity, double[] arr){
+
+        PriorityQueue<cityVertex> mapQueue = new PriorityQueue<cityVertex>();
+        fromCity.shortestPath = 0;
+        mapQueue.add(fromCity);
+        int i = 1;
+        while(!mapQueue.isEmpty()){
+            cityVertex u = mapQueue.poll();
+
+            for(cityEdge neighbour:u.getNeighbours()){
+                Double newDist = u.shortestPath+neighbour.getDistance();
+                i = u.getIndex();
+                if(neighbour.getDestCity().shortestPath>newDist){
+
+                    mapQueue.remove(neighbour.getDestCity());
+                    neighbour.getDestCity().shortestPath = newDist;
+
+                    neighbour.getDestCity().route = new LinkedList<cityVertex>(u.route);
+                    neighbour.getDestCity().route.add(u);
+
+                    mapQueue.add(neighbour.getDestCity());
+
+                }
+
+            }
+            arr[i] =arr[i] + u.shortestPath;
+        }
+    }
+
     public void calculate1(cityVertex fromCity){
 
 
-        PriorityQueue<cityVertex> queue = new PriorityQueue<cityVertex>();
-        fromCity.minDistance = 0;
-        queue.add(fromCity);
+        PriorityQueue<cityVertex> mapQueue = new PriorityQueue<cityVertex>();
+        fromCity.shortestPath = 0;
+        mapQueue.add(fromCity);
 
-        while(!queue.isEmpty()){
+        while(!mapQueue.isEmpty()){
 
-            cityVertex u = queue.poll();
+            cityVertex u = mapQueue.poll();
 
-            for(cityEdge neighbour:u.neighbours){
-                Double newDist = u.minDistance+neighbour.Distance;
+            for(cityEdge neighbour:u.getNeighbours()){
+                Double newDist = u.shortestPath+neighbour.getDistance();
 
-                if(neighbour.destCity.minDistance>newDist){
-                    // Remove the node from the queue to update the distance value.
-                    queue.remove(neighbour.destCity);
-                    neighbour.destCity.minDistance = newDist;
+                if(neighbour.getDestCity().shortestPath>newDist){
 
-                    // Take the path visited till now and add the new node.s
-                    neighbour.destCity.path = new LinkedList<cityVertex>(u.path);
-                    neighbour.destCity.path.add(u);
+                    mapQueue.remove(neighbour.getDestCity());
+                    neighbour.getDestCity().shortestPath = newDist;
 
-                    //Reenter the node with new distance.
-                    queue.add(neighbour.destCity);
+                    neighbour.getDestCity().route = new LinkedList<cityVertex>(u.route);
+                    neighbour.getDestCity().route.add(u);
+
+                    mapQueue.add(neighbour.getDestCity());
                 }
             }
         }
     }
-
-    public void calculateAll(cityVertex fromCity, double[] arr){
-
-        PriorityQueue<cityVertex> queue = new PriorityQueue<cityVertex>();
-        fromCity.minDistance = 0;
-        queue.add(fromCity);
-        int i = 1;
-        while(!queue.isEmpty()){
-
-            cityVertex u = queue.poll();
-
-            for(cityEdge neighbour:u.neighbours){
-                Double newDist = u.minDistance+neighbour.Distance;
-                i = u.index;
-                if(neighbour.destCity.minDistance>newDist){
-
-                    queue.remove(neighbour.destCity);
-                    neighbour.destCity.minDistance = newDist;
-
-                    neighbour.destCity.path = new LinkedList<cityVertex>(u.path);
-                    neighbour.destCity.path.add(u);
-
-                    queue.add(neighbour.destCity);
-
-                }
-
-            }
-            arr[i] =arr[i] + u.minDistance;
-        }
-
-    }
-
-
-
 }
+
+

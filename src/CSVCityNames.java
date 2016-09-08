@@ -15,17 +15,26 @@ import java.io.IOException;
  * token after token. This file is also used for implementing a
  * few methods to clean up the main class. These methods have
  * been used just for the sake of simplifying the main method.
+ * The best
+ *
+ *
  *
  */
 
 
 public class CSVCityNames {
 
-    public static City[] readCities(int printBool) {
+    /**
+     * Used for reading files readCities reads a list of cities and sticks them into a City[]
+     * This is used later for referencing Cities
+     * @param printBool Option to either give output or not
+     * @return returns a Structure of City names listed
+     */
+    private static City[] readCities(int printBool) {
 
         String csvFile = "CityNames.txt";
         BufferedReader br = null;
-        String line = "";
+        String line;
         String cvsSplitBy = ",";
         City[] cities = new City[0];
         int total = 0;
@@ -62,10 +71,10 @@ public class CSVCityNames {
     }
 
 
-    public static CityDist[] readCityDist(int printBool) {
+    private static CityDist[] readCityDist(int printBool) {
         String csvFile = "CityDistances.txt";
         BufferedReader br = null;
-        String line = "";
+        String line ;
         CityDist[] cityDistances = new CityDist[0];
         String cvsSplitBy = " ";
         int total = 0;
@@ -103,10 +112,10 @@ public class CSVCityNames {
         return cityDistances;
     }
 
-    public static Participants[] readParticipants (int printBool){
+    private static Participants[] readParticipants (int printBool){
         String csvFile = "Participants.txt";
         BufferedReader br = null;
-        String line = "";
+        String line;
         Participants [] allPartic = new Participants[0];
         String cvsSplitBy = " ";
         int total = 0;
@@ -119,7 +128,6 @@ public class CSVCityNames {
             int counter = 1;
             while ((line = br.readLine()) != null) {
 
-                // use comma as separator
                 String[] city = line.split(cvsSplitBy);
                 allPartic[counter] = new Participants(city[0],Integer.parseInt(city[1]));
                 if (printBool == 1)
@@ -144,7 +152,13 @@ public class CSVCityNames {
 
     }
 
-    public static void findBestCity(City[] allCities, CityDist[] totalCity, Participants[] allPartic){
+    /**
+     *
+     * @param allCities Structure of cities that were read in
+     * @param totalCity Structure of edges that were read in
+     * @param allPartic Create a map with paths and edges to all cities
+     */
+    private static void findBestCity(City[] allCities, CityDist[] totalCity, Participants[] allPartic){
         int particLen = allPartic.length;
         int citylen = allCities.length;
         double[] BestCity = new double[citylen];
@@ -159,11 +173,18 @@ public class CSVCityNames {
         }
         int BestCityAvg = findMinIdx(BestCity);
         System.out.println("\n" + BestCityAvg + ".  " + allCities[BestCityAvg].getCityName() + ","
-                + allCities[BestCityAvg].getState() + " is the closest city on average, and on average is  "
+                + allCities[BestCityAvg].getState() + " is the closest city on average, and on average is\n\t "
                 + BestCity[BestCityAvg] + " miles away from all of the participants!");
     }
 
-    public static Map startList(City[] allCities, CityDist[] totalDist){
+    /**
+     * This method starts a list/map of the cities and distances of all of the inputted
+     * cities and distances from other cities
+     * @param allCities Structure of cities that were read in
+     * @param totalDist Structure of edges that were read in
+     * @return Create a map with paths and edges to all cities
+     */
+    private static Map startList(City[] allCities, CityDist[] totalDist){
         Map g = new Map(allCities.length, allCities);
 
         for(int i = 1; i < totalDist.length; i++){
@@ -172,21 +193,31 @@ public class CSVCityNames {
         return g;
     }
 
-    public static void DoPartOneTwoThree(){
+    /**
+     * Method that does all the work for me so I can just make one function call in main.
+     * Makes for a cleaner end result
+     */
+    public static void DoPartOneTwoThree(int city){
         City[] allCities = readCities(0);
         Participants[] totalParticipants = readParticipants(0);
         CityDist[] totalDist = readCityDist(0);
-        Dijkstra obj = new Dijkstra();
+        Dijkstra findPath = new Dijkstra();
         Map g = startList(allCities,totalDist);
         g.PrintAdjList();
-        obj.calculate1(g.getVertex(57));
+        findPath.calculate1(g.getVertex(city-1));
+        System.out.println("\n\nFrom "+ g.getVertex(city).getName() + " to :");
         g.sort();
-        System.out.println("\n\nFrom Chicago to :");
         g.PrintDistList();
         findBestCity(allCities,totalDist,totalParticipants);
     }
 
-    public static int findMinIdx(double[] BestCityArr) {
+    /**
+     * This method is just used to find the index of the minimum value in an
+     * Integer array
+     * @param BestCityArr - Array being evaluated
+     * @return returning the index of the minimum value in an array
+     */
+    private static int findMinIdx(double[] BestCityArr) {
         if (BestCityArr == null || BestCityArr.length == 0) return -1;
         double minVal = BestCityArr[1];
         int indexMin = 0;

@@ -6,6 +6,7 @@
  * This file holds the class that defines CityDist, this class holds
  * 3 variables, the from city index (src), the toCity index (dest),
  * and the distance (in miles) between the two cities.
+ * Strictly used for reading from a csv file.
  *
  */
 public class CityDist {
@@ -19,6 +20,10 @@ public class CityDist {
         this.dist = dist;
     }
 
+    /**
+     * Getters
+     * @return
+     */
     public String toString(){
         return "Starting at city : " + this.fromCity + " Going to city : "+this.toCity + ", is " + this.dist + " miles away.";
     }

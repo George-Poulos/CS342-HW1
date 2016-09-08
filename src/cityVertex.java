@@ -13,26 +13,48 @@ import java.util.*;
  */
 
 public class cityVertex implements Comparable<cityVertex>{
-    public LinkedList<cityVertex> path;
-    public ArrayList<cityEdge> neighbours;
-    public final String name;
-    public final int index;
-    public double minDistance = Double.POSITIVE_INFINITY;
+    public LinkedList<cityVertex> route;
+    private ArrayList<cityEdge> neighbours;
+    public double shortestPath = Double.POSITIVE_INFINITY;
+    private final String name;
+    private final int index;
 
-    public int compareTo(cityVertex other){
-        return Double.compare(minDistance,other.minDistance);
-    }
+    /**
+     * Setter for city Vertex
+     * @param name user defined name for a city
+     * @param n user defined int for the index of that city.
+     */
     public cityVertex(String name, int n){
         this.name = name;
         neighbours = new ArrayList<cityEdge>();
-        path = new LinkedList<cityVertex>();
+        route = new LinkedList<cityVertex>();
         this.index = n;
     }
+
+    public int compareTo(cityVertex other){
+        return Double.compare(shortestPath,other.shortestPath);
+    }
+
+    /**
+     * Getter classes
+     * @return Returns the String chosen
+     */
+    public String getName(){
+
+        return name;
+    }
+
     public String toString(){
 
         return Integer.toString(index);
     }
-    public String getName(){
-        return name;
+
+    public int getIndex(){
+        return index;
     }
+
+    public ArrayList<cityEdge> getNeighbours(){
+        return neighbours;
+    }
+
 }

@@ -9,10 +9,23 @@
  */
 
 public class cityEdge{
-    public final cityVertex destCity;
-        public final double Distance;
-    public cityEdge(cityVertex target, double weight){
+    private final cityVertex destCity;
+    private final double Distance;
+
+    public cityEdge(cityVertex target, double distance){
         this.destCity = target;
-        this.Distance = weight;
+        this.Distance = distance;
+    }
+
+    /**
+     * Getters
+     * @return
+     */
+    public cityVertex getDestCity(){
+        return destCity;
+    }
+
+    public double getDistance(){
+        return Distance;
     }
 }

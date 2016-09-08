@@ -6,7 +6,7 @@
  * This file holds the class that defines Participants, and this
  * class holds a String variable that holds the Participant's name
  * and holds an Integer that holds the participant's hometown
- * as a number.
+ * as a number. Strictly used for reading from a csv file.
  *
  */
 public class Participants {
@@ -17,13 +17,17 @@ public class Participants {
         this.name = name;
         this.hometown = hometown;
     }
+
+    /**
+     * Getters
+     * @return
+     */
     public String toString(){
         return (this.name + " is from " + this.hometown);
     }
     public String getName(){
         return this.name;
     }
-
     public int getHometown(){
         return this.hometown;
     }

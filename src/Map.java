@@ -15,6 +15,12 @@ import java.util.*;
 
 public class Map {
     private ArrayList<cityVertex> Map;
+
+    /**
+     * Setter
+     * @param numberVertices user defined number of cities to expect
+     * @param allCities a City[] variable that holds city names from the file read
+     */
     public Map(int numberVertices, City[] allCities){
         Map = new ArrayList<cityVertex>(numberVertices);
         for(int i=1;i<numberVertices;i++){
@@ -32,12 +38,16 @@ public class Map {
     public void addEdge(int fromCity, int toCity, double distance){
         cityVertex s = Map.get(fromCity);
         cityEdge new_edge = new cityEdge(Map.get(toCity),distance);
-        s.neighbours.add(new_edge);
+        s.getNeighbours().add(new_edge);
         s = Map.get(toCity);
         new_edge = new cityEdge(Map.get(fromCity),distance);
-        s.neighbours.add(new_edge);
+        s.getNeighbours().add(new_edge);
     }
 
+    /**
+     * Getters for Map Class
+     * @return
+     */
     public ArrayList<cityVertex> getMap() {
         return Map;
     }
@@ -46,24 +56,34 @@ public class Map {
         return Map.get(vert);
     }
 
+    /**
+     * Print Adjacency list of the current map
+     */
     public void PrintAdjList(){
         System.out.println("\n\nPrinting Adjacency List : ");
         for(cityVertex v:this.getMap()){
             System.out.print("City : ("+ v + ")");
-            for(cityEdge pathvert:v.neighbours) {
-                System.out.print(" -> " + pathvert.destCity);
+            for(cityEdge pathvert:v.getNeighbours()) {
+                System.out.print(" -> " + pathvert.getDestCity());
             }
             System.out.println("");
         }
     }
+
+    /**
+     * Print the shortest path distance from one city to all other cities
+     */
     public void PrintDistList(){
         for(cityVertex v:this.getMap()){
-            System.out.print(v.getName()+ ": "+ v.minDistance);
-            System.out.println("");
+            System.out.print(v.getName()+ ": "+ v.shortestPath + "\n");
         }
     }
 
+    /**
+     * Comparator for sort function, this sorts aphabetically
+     */
     public  void sort(){
+
         Collections.sort(this.getMap(), new CityNameComparator());
     }
 

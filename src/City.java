@@ -7,6 +7,7 @@
  * an Integer variable that holds the city index, a String that
  * holds the name of the city, and another string that holds the
  * name of the state that city belongs to.
+ * Strictly used for reading from a csv file.
  *
  */
 public class City {
@@ -20,6 +21,10 @@ public class City {
         this.State = State;
     }
 
+    /**
+     * Getters
+     * @return
+     */
     public String toString(){
         return "The city : " + this.city + ", "+this.cityName + " in the state : " + this.State;
     }
